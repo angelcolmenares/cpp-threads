@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1496532629 source:/home/angel/Code/firstcpp/firstcpp/main.cpp
+	<iostream>
+	<pthread.h>
+	<string>
+	"FirstClass.h"
+
+1496535439 source:/home/angel/Code/firstcpp/firstcpp/src/FirstClass.cpp
+	"FirstClass.h"
+
+1496535439 /home/angel/Code/firstcpp/firstcpp/include/FirstClass.h
+	<iostream>
+
