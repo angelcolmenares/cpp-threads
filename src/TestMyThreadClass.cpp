@@ -35,9 +35,7 @@ void TestMyThreadClass::PrintNameAndIndex()
     for(i=0;i<10;i++){
         this_thread::sleep_for(chrono::milliseconds(100));
         this->index= this->index.append(to_string(i) );
-        if(callback){
-            callback(this);
-        }
+
     }
     
     cout<< "Nombre: " << this->name << " . Index:" << this->index << endl; 
@@ -58,6 +56,9 @@ void TestMyThreadClass::InternalThreadEntry()
     PrintNameAndIndex();
     PrintName();
     PrintIndex();
+    if(callback){
+            callback(this);
+    }
 }
 
 void TestMyThreadClass::Callback(void (*action)(void*))

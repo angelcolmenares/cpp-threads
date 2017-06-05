@@ -17,12 +17,17 @@ int square(int x) {
 
 void TestCallback( void* testclass  ){
     TestMyThreadClass* tc = (TestMyThreadClass*) testclass;
-    cout<< "callback  index: " << tc->GetIndex() << endl;
+    tc->WaitForThreadToExit();
+    cout<< "callback name "<< tc->GetName() <<" index: " <<  tc->GetIndex() << endl;
+    
 }
 
 void* TestSimpleTask ( void* taskarg){
+    Task* task = (Task*) taskarg;
     cout<< "iniciando TestSimpleTask" << endl;
     this_thread::sleep_for(chrono::milliseconds(2000));
+    cout<< " wait  TestSimpleTask" << endl;
+    task->Wait();
     cout<< "fin TestSimpleTask" << endl;
     return 0;
 }
@@ -42,17 +47,17 @@ int main ( int argc, const char* argv[])
     tc2->StartThread();
     cout<<"Se esta ejecutando TestMyThreadClass tc2"<<endl ;
         
-    tc1->WaitForThreadToExit();
-    cout<<"Finalizado TestMyThreadClass.. tc1 " <<endl;
+    //tc1->WaitForThreadToExit();
+    //cout<<"Finalizado TestMyThreadClass.. tc1 " <<endl;
     
     
-    tc2->WaitForThreadToExit();
-    cout<<"Finalizado TestMyThreadClass.. tc2 " <<endl;
+    //tc2->WaitForThreadToExit();
+    //cout<<"Finalizado TestMyThreadClass.. tc2 " <<endl;
 
     cout<<"ahora con task" << endl;
     
-    long x=0;
-    auto task = TaskFactory::StartNewAction(TestSimpleTask, (void *) x);
+    //long x=0;
+    TaskFactory::StartNewAction(TestSimpleTask);
     
     future<int> async_task = async(launch::async, &square, 10);
     cout<< "ya se lanzo async square"<< endl;
@@ -70,8 +75,8 @@ int main ( int argc, const char* argv[])
     cout<< "ya tengo square" << endl;
     cout << "The thread returned " << v << endl;
     
-    task->Wait();
-    cout << "finalizado task" << endl;
+    //task->Wait();
+    //cout << "finalizado task" << endl;
     
     //cin>> j;
     

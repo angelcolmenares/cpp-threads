@@ -37,6 +37,7 @@ private:
 class TaskFactory{
 public:
     static Task* StartNewAction(void* (*action)(void*), void* action_args);
+    static Task* StartNewAction(void* (*action)(void*));
 };
 
 #endif // TASKFACTORY
