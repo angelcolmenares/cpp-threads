@@ -38,6 +38,7 @@
     <File Name="src/Task.cpp"/>
     <File Name="src/TaskFactory.cpp"/>
     <File Name="src/ThreadInterface.cpp"/>
+    <File Name="socket_client/main.cpp"/>
   </VirtualDirectory>
   <VirtualDirectory Name="Headers">
     <VirtualDirectory Name="include">
@@ -142,4 +143,6 @@
       </Completion>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>

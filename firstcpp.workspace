@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="firstcpp" Database="">
   <Project Name="firstcpp" Path="firstcpp.project" Active="Yes"/>
+  <Project Name="socket_server" Path="socket_server/socket_server.project" Active="No"/>
+  <Project Name="socket_client" Path="socket_client/socket_client.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="no">
       <Environment/>
       <Project Name="firstcpp" ConfigName="Debug"/>
+      <Project Name="socket_server" ConfigName="Debug"/>
+      <Project Name="socket_client" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
       <Project Name="firstcpp" ConfigName="Release"/>
+      <Project Name="socket_server" ConfigName="Release"/>
+      <Project Name="socket_client" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>
