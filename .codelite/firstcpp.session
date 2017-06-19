@@ -5,8 +5,36 @@
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
       <wxString Value="/home/angel/Code/firstcpp/firstcpp/socket_server/main.cpp" Name="FileName"/>
+      <int Value="55" Name="FirstVisibleLine"/>
+      <int Value="67" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/angel/Code/firstcpp/firstcpp/socket_client/main.cpp" Name="FileName"/>
+      <int Value="3" Name="FirstVisibleLine"/>
+      <int Value="0" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/angel/Code/firstcpp/firstcpp/src/TestMyThreadClass.cpp" Name="FileName"/>
+      <int Value="45" Name="FirstVisibleLine"/>
+      <int Value="63" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/angel/Code/firstcpp/firstcpp/include/TestMyThreadClass.h" Name="FileName"/>
       <int Value="0" Name="FirstVisibleLine"/>
-      <int Value="10" Name="CurrentLine"/>
+      <int Value="28" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="/home/angel/Code/firstcpp/firstcpp/include/ThreadInterface.h" Name="FileName"/>
+      <int Value="0" Name="FirstVisibleLine"/>
+      <int Value="1" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>

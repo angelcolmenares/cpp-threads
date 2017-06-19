@@ -1,6 +1,5 @@
 //https://stackoverflow.com/questions/25393001/boostasio-tcp-server-reading-a-message-from-the-client
 #include <stdio.h>
-
 #include <ctime>
 #include <iostream>
 #include <string>
@@ -8,6 +7,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/asio.hpp>
+#include <pthread.h>
 
 using std::string;
 using boost::asio::ip::tcp;
@@ -33,36 +33,25 @@ public:
         return socket_;
     }
 
-    void start() {
-        
-        start_read();
-        
-        /*message_ = make_daytime_string().append("=>").append(messageFromClient_);
-
-        boost::asio::async_write(socket_, boost::asio::buffer(message_),
-                                 boost::bind(&tcp_connection::handle_write, shared_from_this(),
-                                             boost::asio::placeholders::error,
-                                             boost::asio::placeholders::bytes_transferred));*/
+    void start() 
+    {
+       start_read();
+    }
+    
+    void set_callback(std::function<void(const string&)> action)
+    {
+        callback= action;
     }
 
 private:
     tcp_connection(boost::asio::io_service& io_service)
         : socket_(io_service) {
     }
-
-    void handle_write(const boost::system::error_code& /*error*/,
-                      size_t /*bytes_transferred*/) {
-    }
-
+  
     tcp::socket socket_;
-    std::string message_;
-
-    //
-    boost::asio::streambuf input_buffer_;
-    std::string messageFromClient_;
-    //
-
-    //
+    boost::asio::streambuf input_buffer_;  
+    std::function<void(const string&)> callback = [] (const string& msg){};
+    
     void start_read() {
         // Start an asynchronous operation to read a newline-delimited message.
         // When read, handle_read should kick in
@@ -74,12 +63,7 @@ private:
 
     // When stream is received, handle the message from the client
     void handle_read(const boost::system::error_code& ec) {
-        //if (stopped_)
-        //  return;
-
-        // Making the message nil every time the function starts. Do I need it???????
-        messageFromClient_ = "";
-
+             
         if (!ec) {
             // Extract the newline-delimited message from the buffer.
             std::string line;
@@ -87,41 +71,34 @@ private:
             std::getline(is, line);
 
             // Empty messages are heartbeats and so ignored.
-            if (!line.empty()) {
-                messageFromClient_ = line;
-                std::cout << "Received: " << line << "\n";
+            if (!line.empty())
+            {    
+                callback(line);
             }
-
             start_read();
-        } else {
+        } 
+        else
+        {
             std::cout << "Error on receive: " << ec.message() << "\n";
         }
-        
-         message_ = make_daytime_string().append("=>").append(messageFromClient_);
-
-        boost::asio::async_write(socket_, boost::asio::buffer(message_),
-                                 boost::bind(&tcp_connection::handle_write, shared_from_this(),
-                                             boost::asio::placeholders::error,
-                                             boost::asio::placeholders::bytes_transferred));
-        
     }
-
-    //
-
 };
 
 class tcp_server
 {
 public:
-    tcp_server(boost::asio::io_service& io_service, int port )
+    tcp_server(boost::asio::io_service& io_service, int port, void (*action)(const string&) )
         : acceptor_(io_service, tcp::endpoint(tcp::v4(), port )) {
-        start_accept();
+            callback= action;
+            start_accept();
     }
+    
 
 private:
     void start_accept() {
         tcp_connection::pointer new_connection =
             tcp_connection::create(acceptor_.get_io_service());
+        new_connection->set_callback(callback);
 
         acceptor_.async_accept(new_connection->socket(),
                                boost::bind(&tcp_server::handle_accept, this, new_connection,
@@ -138,6 +115,7 @@ private:
     }
 
     tcp::acceptor acceptor_;
+    std::function<void(const string&)> callback = [] (const string&){};
 };
 
 
@@ -147,7 +125,11 @@ int main(int argc, char **argv)
     int port = 13000;
     try {
         boost::asio::io_service io_service;
-        tcp_server server(io_service, port);
+        tcp_server server(io_service, port,
+        [](const string& msg)
+        {
+            std::cout<<"msg :" << msg << std::endl;
+        });
         io_service.run();
     } catch (std::exception& e) {
         std::cerr << e.what() << std::endl;

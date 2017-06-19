@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=angel
-Date                   :=15/06/17
+Date                   :=19/06/17
 CodeLitePath           :="/home/angel/.codelite"
 LinkerName             :=/usr/bin/g++
 SharedObjectLinkerName :=/usr/bin/g++ -shared -fPIC
@@ -60,7 +60,8 @@ AS       := /usr/bin/as
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FirstClass.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_SecondClass.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_ThirdClass.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_PThread.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_TestMyThreadClass.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Task.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_TaskFactory.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_ThreadInterface.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FirstClass.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_SecondClass.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_ThirdClass.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_PThread.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_TestMyThreadClass.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Task.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_TaskFactory.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_ThreadInterface.cpp$(ObjectSuffix) $(IntermediateDirectory)/socket_client_main.cpp$(ObjectSuffix) \
+	
 
 
 
@@ -162,6 +163,14 @@ $(IntermediateDirectory)/src_ThreadInterface.cpp$(DependSuffix): src/ThreadInter
 
 $(IntermediateDirectory)/src_ThreadInterface.cpp$(PreprocessSuffix): src/ThreadInterface.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_ThreadInterface.cpp$(PreprocessSuffix) "src/ThreadInterface.cpp"
+
+$(IntermediateDirectory)/socket_client_main.cpp$(ObjectSuffix): socket_client/main.cpp $(IntermediateDirectory)/socket_client_main.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/angel/Code/firstcpp/firstcpp/socket_client/main.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/socket_client_main.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/socket_client_main.cpp$(DependSuffix): socket_client/main.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/socket_client_main.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/socket_client_main.cpp$(DependSuffix) -MM "socket_client/main.cpp"
+
+$(IntermediateDirectory)/socket_client_main.cpp$(PreprocessSuffix): socket_client/main.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/socket_client_main.cpp$(PreprocessSuffix) "socket_client/main.cpp"
 
 
 -include $(IntermediateDirectory)/*$(DependSuffix)
